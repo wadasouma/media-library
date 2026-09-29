@@ -149,6 +149,7 @@ function MediaRecord({title,recordName}:RecordProps){
 function MediaView({title,recordName}:RecordProps){
     const [gettedDatas,setGettedDatas]=useState<SavedDatas[]>([]);
     const [edittingDatas,setEdittingDatas]=useState<SavedDatas>();
+    const [serchText,setSerchText]=useState("");
     async function getRecords(){
         const datas=await handleGetRecords<SavedDatas>("yourChoiceDB",recordName);
         setGettedDatas(datas);
@@ -171,12 +172,22 @@ function MediaView({title,recordName}:RecordProps){
         await getRecords();
         alert("更新完了");
     }
+    const displayDatas=gettedDatas.filter((data)=>{
+        return data.title.includes(serchText);
+    });
     return(
         <div>
             <h1>{title}探す</h1>
+            <label>タイトル検索：
+                <input 
+                type="text"
+                value={serchText}
+                onChange={(e)=>setSerchText(e.target.value)}
+                />
+            </label>
             {edittingDatas&&<MediaForm key={edittingDatas.id} onSubmit={handleUpdataRecord} initialDatas={edittingDatas} />}
             <div className="mediaView">
-                {gettedDatas.map((data)=>(
+                {displayDatas.map((data)=>(
                     <div key={data.id} >
                         <img src={URL.createObjectURL(data.imgFile)} className="mediaPic"></img>
                         <p>タイトル：{data.title}</p>
