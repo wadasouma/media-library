@@ -1,32 +1,29 @@
-# React + TypeScript + Vite
+# Media Library
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+映画・漫画を登録・管理するためのWebアプリケーションです。
 
-Currently, two official plugins are available:
+## 使用技術
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React
+- TypeScript
+- React Router
+- IndexedDB
+- Vite
+- Git / GitHub
 
-## React Compiler
+## 主な機能
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 映画・漫画の登録
+- 登録データの一覧表示
+- 更新
+- 削除
+- タイトルの部分一致検索
+- タグ検索
+- 追加順の昇順・降順ソート
+- サムネイル画像の保存
 
-## Expanding the Oxlint configuration
+## 起動方法
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
-
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+```bash
+npm install
+npm run dev
