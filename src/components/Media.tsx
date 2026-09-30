@@ -177,9 +177,9 @@ function MediaView({title,recordName}:RecordProps){
     function sortDatas(datas:SavedDatas[]){
         const copiedDatas=[...datas]
         if(sortOrder==="asc"){
-            return copiedDatas.sort((a,b)=>{return a.id-b.id})
-        }else{
             return copiedDatas.sort((a,b)=>{return b.id -a.id})
+        }else{
+            return copiedDatas.sort((a,b)=>{return a.id-b.id})
         }
     }
     const displayDatas=gettedDatas.filter((data)=>{
