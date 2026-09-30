@@ -130,7 +130,7 @@ function MediaRecord({title,recordName}:RecordProps){
     async function handleSubmitDatas(datas:NewDatas){
         if(datas.imgFile===null){alert("画像を添付してください"); return;} 
         try{
-            await handleAddRecord(datas,"yourChoiceDB",recordName);
+            await handleAddRecord(datas,recordName);
             alert("登録が完了しました");
         }catch(error){
             alert("登録に失敗しました");
@@ -153,7 +153,7 @@ function MediaView({title,recordName}:RecordProps){
     const [serchTitle,setSerchTitle]=useState("");
     const [sortOrder,setSortOrder]=useState("asc");
     async function getRecords(){
-        const datas=await handleGetRecords<SavedDatas>("yourChoiceDB",recordName);
+        const datas=await handleGetRecords<SavedDatas>(recordName);
         setGettedDatas(datas);
     }
 
@@ -161,8 +161,8 @@ function MediaView({title,recordName}:RecordProps){
         getRecords();
     },[]);
     
-    async function handleDelete(dbName:string,recordName:string,id:number){
-        await deleteRecord(dbName,recordName,id);
+    async function handleDelete(recordName:string,id:number){
+        await deleteRecord(recordName,id);
         getRecords();
     }
     function handleMountMediaForm(data:SavedDatas){
@@ -170,7 +170,7 @@ function MediaView({title,recordName}:RecordProps){
     }
     async function handleUpdataRecord(datas:NewDatas){
         if(edittingDatas===undefined)return;
-        await updateRecord(datas,edittingDatas.id,"yourChoiceDB",recordName);
+        await updateRecord(datas,edittingDatas.id,recordName);
         await getRecords();
         alert("更新完了");
     }
@@ -228,7 +228,7 @@ function MediaView({title,recordName}:RecordProps){
                         ))}
                         <p>URL：{data.url}</p>
                         <p>型番：{data.modelNumber}</p>
-                        <button onClick={()=>{handleDelete("yourChoiceDB",recordName,data.id)}}>削除</button>
+                        <button onClick={()=>{handleDelete(recordName,data.id)}}>削除</button>
                         <button onClick={()=>handleMountMediaForm(data)}>更新</button>
                     </div>                    
                 ))}

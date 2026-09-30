@@ -15,7 +15,7 @@ type NewDatas={
 type SavedDatas=NewDatas & {
     id:number;
 }
-export async function handleAddRecord<T>(datas:T,dbName:string,recordName:string):Promise<IDBValidKey>{
+export async function handleAddRecord<T>(datas:T,recordName:string):Promise<IDBValidKey>{
     
     const db=await opneDB();
     return addRecord(datas,recordName,db);
@@ -63,7 +63,7 @@ function addRecord<T>(datas:T,recordName:string,db:IDBDatabase):Promise<IDBValid
     });
 
 }
-export async function handleGetRecords<T>(dbName:string,recordName:string):Promise<T[]>{
+export async function handleGetRecords<T>(recordName:string):Promise<T[]>{
     const db=await opneDB();
     return getRecords<T>(recordName,db);
 }
@@ -81,7 +81,7 @@ function getRecords<T>(recordName:string,db:IDBDatabase):Promise<T[]>{
         }
     })
 }
-export async function deleteRecord(dbName:string,recordName:string,id:number){
+export async function deleteRecord(recordName:string,id:number){
     const db=await opneDB();
     return new Promise((resolve,reject)=>{
         const transaction=db.transaction(recordName,"readwrite");
@@ -96,7 +96,7 @@ export async function deleteRecord(dbName:string,recordName:string,id:number){
         }
     })
 }
-export async function updateRecord(datas:NewDatas,id:number,dbName:string,recordName:string){
+export async function updateRecord(datas:NewDatas,id:number,recordName:string){
     const data:SavedDatas={...datas,id:id}
     const db=await opneDB();
     return new Promise((resolve,reject)=>{
