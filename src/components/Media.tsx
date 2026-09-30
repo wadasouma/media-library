@@ -151,6 +151,7 @@ function MediaView({title,recordName}:RecordProps){
     const [edittingDatas,setEdittingDatas]=useState<SavedDatas>();
     const [serchText,setSerchText]=useState("");
     const [serchTitle,setSerchTitle]=useState("");
+    const [sortOrder,setSortOrder]=useState("asc");
     async function getRecords(){
         const datas=await handleGetRecords<SavedDatas>("yourChoiceDB",recordName);
         setGettedDatas(datas);
@@ -173,6 +174,14 @@ function MediaView({title,recordName}:RecordProps){
         await getRecords();
         alert("更新完了");
     }
+    function sortDatas(datas:SavedDatas[]){
+        const copiedDatas=[...datas]
+        if(sortOrder==="asc"){
+            return copiedDatas.sort((a,b)=>{return a.id-b.id})
+        }else{
+            return copiedDatas.sort((a,b)=>{return b.id -a.id})
+        }
+    }
     const displayDatas=gettedDatas.filter((data)=>{
         return data.title.includes(serchText);
     });
@@ -181,6 +190,7 @@ function MediaView({title,recordName}:RecordProps){
             return tag.includes(serchTitle);
         })
     })
+    const displayDatas3=sortDatas(displayDatas2);
     return(
         <div>
             <h1>{title}探す</h1>
@@ -198,9 +208,16 @@ function MediaView({title,recordName}:RecordProps){
                 onChange={(e)=>setSerchTitle(e.target.value)}
                 />
             </label>
+            <select
+            value={sortOrder}
+            onChange={(e)=>setSortOrder(e.target.value)}
+            >
+                <option value={"asc"}>新しい順</option>
+                <option value={"des"}>古い順</option>
+            </select>
             {edittingDatas&&<MediaForm key={edittingDatas.id} onSubmit={handleUpdataRecord} initialDatas={edittingDatas} />}
             <div className="mediaView">
-                {displayDatas2.map((data)=>(
+                {displayDatas3.map((data)=>(
                     <div key={data.id} >
                         <img src={URL.createObjectURL(data.imgFile)} className="mediaPic"></img>
                         <p>タイトル：{data.title}</p>
