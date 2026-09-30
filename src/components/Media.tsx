@@ -192,33 +192,35 @@ function MediaView({title,recordName}:RecordProps){
     })
     const displayDatas3=sortDatas(displayDatas2);
     return(
-        <div>
+        <div className="mediaViewPage">
             <h1>{title}探す</h1>
-            <label>タイトル検索：
-                <input 
-                type="text"
-                value={serchText}
-                onChange={(e)=>setSerchText(e.target.value)}
-                />
-            </label>
-            <label>タグ検索：
-                <input 
-                type="text"
-                value={serchTitle}
-                onChange={(e)=>setSerchTitle(e.target.value)}
-                />
-            </label>
-            <select
-            value={sortOrder}
-            onChange={(e)=>setSortOrder(e.target.value)}
-            >
-                <option value={"asc"}>新しい順</option>
-                <option value={"des"}>古い順</option>
-            </select>
+            <div className="searchControls">
+                <label>タイトル検索：
+                    <input 
+                    type="text"
+                    value={serchText}
+                    onChange={(e)=>setSerchText(e.target.value)}
+                    />
+                </label>
+                <label>タグ検索：
+                    <input 
+                    type="text"
+                    value={serchTitle}
+                    onChange={(e)=>setSerchTitle(e.target.value)}
+                    />
+                </label>
+                <select
+                value={sortOrder}
+                onChange={(e)=>setSortOrder(e.target.value)}
+                >
+                    <option value={"asc"}>新しい順</option>
+                    <option value={"des"}>古い順</option>
+                </select>
+            </div>
             {edittingDatas&&<MediaForm key={edittingDatas.id} onSubmit={handleUpdataRecord} initialDatas={edittingDatas} />}
             <div className="mediaView">
                 {displayDatas3.map((data)=>(
-                    <div key={data.id} >
+                    <div key={data.id} className="mediaCard">
                         <img src={URL.createObjectURL(data.imgFile)} className="mediaPic"></img>
                         <p>タイトル：{data.title}</p>
                         {data.tags.map((tag,index)=>(
